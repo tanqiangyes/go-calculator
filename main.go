@@ -26,15 +26,19 @@ func main() {
 			f, err := calculator(input.Text)
 			log.Printf("Calculate result: %v", f)
 			if err != nil {
-				str.Set("服务器开小差了...")
+				err := str.Set("服务器开小差了...")
+				if err != nil {
+					return
+				}
 			} else {
-				str.Set(fmt.Sprint(f))
+				err := str.Set(fmt.Sprint(f))
+				if err != nil {
+					return
+				}
 			}
 		}()
-	}))
+	}), widget.NewLabelWithData(str))
 	myWindow.SetContent(content)
-	text := widget.NewLabelWithData(str)
-	myWindow.SetContent(text)
 	myWindow.ShowAndRun()
 }
 
